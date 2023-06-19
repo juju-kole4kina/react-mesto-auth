@@ -1,5 +1,6 @@
 import '../index.css';
 import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -8,6 +9,10 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import { ProtectedRoute } from './ProtectedRoute';
 import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -17,6 +22,8 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isImageOpen, setImageOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState({})
 
@@ -119,15 +126,24 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        handleCardLike={handleCardLike}
-        handleCardDelete={handleCardDelete}
-        cards={cards}
-      />
+      <Routes>
+        <Route path='/sing-in' element={<Login />} />
+        <Route path='/sing-up' elenemt={<Register />} />
+        <Route path='/main' element={
+          <ProtectedRoute
+          element={
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            handleCardLike={handleCardLike}
+            handleCardDelete={handleCardDelete}
+            cards={cards}
+          />}
+          isLoggedIn={isLoggedIn}/>} />
+        <Route path='/' element={isLoggedIn ? <Navigate to='/main' /> : <Navigate to='/sing-in' /> } />
+      </Routes>
 
       <Footer />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
