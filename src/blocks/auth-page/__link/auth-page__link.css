@@ -1,0 +1,12 @@
+.auth-page__link {
+  font-size: 14px;
+  line-height: 16.94px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 15px;
+  transition: opacity .3s ease;
+}
+
+.auth-page__link:hover {
+  opacity: .85;
+}

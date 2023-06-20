@@ -56,3 +56,9 @@
 /* Footer */
 @import url('./blocks/footer/footer.css');
 @import url('./blocks/footer/__copyright/footer__copyright.css');
+/* Authtorization-pages */
+@import url('./blocks/auth-page/auth-page.css');
+@import url('./blocks/auth-page/__form/auth-page__form.css');
+@import url('./blocks/auth-page/__form-title/auth-page__form-title.css');
+@import url('./blocks/auth-page/__input/auth-page__input.css');
+@import url('./blocks/auth-page/__submit-btn/auth-page__submit-btn.css');
