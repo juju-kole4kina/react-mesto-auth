@@ -22,6 +22,8 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isImageOpen, setImageOpen] = React.useState(false);
+  const [isInfoTooltip, setInfoTooltip] = React.useState(false);
+  const [isStatus, setStatus] =React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
   const [isLoggedIn, setLoggedIn] = React.useState(false);
@@ -57,10 +59,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if(jwt){
       auth.getContent(jwt).then((res) => {
-        console.log(res);
         if(res){
-          console.log(res);
-          // console.log(userData);
           setLoggedIn(true);
           setEmail(res.data.email)
           navigate('/', {replace: true})
@@ -69,8 +68,12 @@ function App() {
     }
   }
 
-  function handleLogin(e) {
-    // e.target.preventDefault();
+  function handleLogin(email, password) {
+    auth.autorize(email, password)
+    .then(() => {
+      navigate('/', {replace: true})
+    })
+    .catch((err) => console.log(err));
     setLoggedIn(true);
   }
 
@@ -144,11 +147,26 @@ function App() {
     console.log('попап открытия карточки');
   }
 
+  function handleRegister(email, password) {
+    auth.register(email, password)
+    .then(() => {
+      setInfoTooltip(true);
+      setStatus(true);
+      navigate('/sign-in', {replace: true});
+    })
+    .catch((err) => {
+      console.log(err);
+      setInfoTooltip(true);
+      setStatus(false);
+    });
+  }
+
   function closeAllPopups(){
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setImageOpen(false);
+    setInfoTooltip(false);
 
     console.log('закрыть попап');
   }
@@ -157,7 +175,7 @@ function App() {
       <Header userData={email} />
       <Routes>
         <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
-        <Route path='/sign-up' element={<Register />} />
+        <Route path='/sign-up' element={<Register isRegister={handleRegister} />} />
         <Route exact path='/' element={
           <ProtectedRoute
           element={
@@ -176,11 +194,9 @@ function App() {
 
       <Footer />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-
+      <InfoTooltip isOpen={isInfoTooltip} onClose={closeAllPopups} status={isStatus} />
       <PopupWithForm
         name="verification"
         title="Вы уверены?"

@@ -32,7 +32,6 @@ export default class Auth {
     })
     .then(res => this._checkResponse(res))
     .then((data) => {
-      console.log(data);
       if(data.token){
         localStorage.setItem('jwt', data.token);
         return data;
@@ -52,7 +51,7 @@ export default class Auth {
       }
     })
     .then(res => this._checkResponse(res))
-    .then(data => data)
+    // .then(data => data)
     .then(result => {console.log(result);
       return result;
     })

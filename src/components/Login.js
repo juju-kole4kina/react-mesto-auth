@@ -1,10 +1,10 @@
 import React from "react";
-import { auth } from "../utils/auth";
-import { useNavigate } from 'react-router-dom';
+// import { auth } from "../utils/auth";
+// import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
 function Login(props) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [isEmail,  setEmail] = React.useState('');
   const [isPassword, setPassword] = React.useState('');
@@ -19,14 +19,7 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth.autorize(isEmail, isPassword)
-    .then((data) => {
-      setEmail('');
-      setPassword('');
-      props.handleLogin();
-      navigate('/', {replace: true})
-    })
-    .catch((err) => console.log(err));
+    props.handleLogin(isEmail, isPassword);
   }
 
   return (
