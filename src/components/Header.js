@@ -17,7 +17,7 @@ function Header(props) {
       <ul className='header__nav-bar'>
         {location.pathname === '/sign-up' && <li><Link to="sign-in" className="header__link">Войти</Link></li>}
         {location.pathname === '/sign-in' && <li><Link to="sign-up" className="header__link">Зарегистрироваться</Link></li>}
-        {location.pathname === '/' && <li><span className="header__user-email">`${props.userData.email}`</span><Link to="sign-in" onClick={signOut} className='header__link'>Выйти</Link></li>}
+        {location.pathname === '/' && <li><span className="header__user-email">{props.userData}</span><Link to="sign-in" onClick={signOut} className='header__link'>Выйти</Link></li>}
       </ul>
 
     </header>

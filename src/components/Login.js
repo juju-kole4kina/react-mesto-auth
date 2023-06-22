@@ -21,7 +21,6 @@ function Login(props) {
     e.preventDefault();
     auth.autorize(isEmail, isPassword)
     .then((data) => {
-      // localStorage.setItem('jwt', data.jwt);
       setEmail('');
       setPassword('');
       props.handleLogin();

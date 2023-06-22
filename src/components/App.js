@@ -29,7 +29,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({})
 
   const [cards, setCards] = React.useState([]);
-  const [isUserData, setUserData] = React.useState({});
+  const [email, setEmail] = React.useState('');
 
   const navigate = useNavigate();
 
@@ -57,12 +57,12 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if(jwt){
       auth.getContent(jwt).then((res) => {
+        console.log(res);
         if(res){
-          const userData = {
-            email: res.email
-          }
+          console.log(res);
+          // console.log(userData);
           setLoggedIn(true);
-          setUserData(userData)
+          setEmail(res.data.email)
           navigate('/', {replace: true})
         }
       })
@@ -70,7 +70,7 @@ function App() {
   }
 
   function handleLogin(e) {
-    e.target.preventDefault();
+    // e.target.preventDefault();
     setLoggedIn(true);
   }
 
@@ -154,7 +154,7 @@ function App() {
   }
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header userData={isUserData} />
+      <Header userData={email} />
       <Routes>
         <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
         <Route path='/sign-up' element={<Register />} />
