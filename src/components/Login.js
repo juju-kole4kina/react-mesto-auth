@@ -1,10 +1,7 @@
 import React from "react";
-// import { auth } from "../utils/auth";
-// import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
 function Login(props) {
-  // const navigate = useNavigate();
 
   const [isEmail,  setEmail] = React.useState('');
   const [isPassword, setPassword] = React.useState('');

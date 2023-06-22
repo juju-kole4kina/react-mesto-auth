@@ -1,10 +1,8 @@
 import React from "react";
-// import { auth } from "../utils/auth";
 import { Link } from 'react-router-dom';
 import '../index.css';
 
 function Register(props) {
-  // const navigate = useNavigate();
 
   const [isEmail, setEmail] = React.useState('');
   const [isPassword, setPassword] = React.useState('');
@@ -19,11 +17,6 @@ function Register(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // auth.register(isEmail, isPassword)
-    // .then((res) => {
-    //   navigate('/sign-in', {replace: true});
-    // })
-    // .catch((err) => console.log(err));
     props.isRegister(isEmail, isPassword);
   }
 
