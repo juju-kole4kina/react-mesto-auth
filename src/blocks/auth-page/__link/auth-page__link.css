@@ -1,9 +1,7 @@
 .auth-page__link {
-  font-size: 14px;
-  line-height: 16.94px;
-  font-weight: 400;
-  text-align: center;
-  margin-top: 15px;
+
+  text-decoration: none;
+  color: #fff;
   transition: opacity .3s ease;
 }
 

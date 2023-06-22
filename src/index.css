@@ -6,6 +6,9 @@
 /* Header */
 @import url('./blocks/header/header.css');
 @import url('./blocks/header/__logo/header__logo.css');
+@import url('./blocks/header/__nav-bar/header__nav-bar.css');
+@import url('./blocks/header/__link/header__link.css');
+@import url('./blocks/header/__user-email/header__user-email.css');
 /* Content */
 @import url('./blocks/content/content.css');
 /* Profile */
@@ -62,3 +65,5 @@
 @import url('./blocks/auth-page/__form-title/auth-page__form-title.css');
 @import url('./blocks/auth-page/__input/auth-page__input.css');
 @import url('./blocks/auth-page/__submit-btn/auth-page__submit-btn.css');
+@import url('./blocks/auth-page/__link/auth-page__link.css');
+@import url('./blocks/auth-page/__question/auth-page__question.css');

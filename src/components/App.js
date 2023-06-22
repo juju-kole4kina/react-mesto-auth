@@ -1,6 +1,6 @@
 import '../index.css';
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate,  useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -14,6 +14,7 @@ import Register from './Register';
 import InfoTooltip from './InfoTooltip';
 import { ProtectedRoute } from './ProtectedRoute';
 import { api } from '../utils/api';
+import { auth } from '../utils/auth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({})
 
   const [cards, setCards] = React.useState([]);
+  const [isUserData, setUserData] = React.useState({});
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -44,6 +48,31 @@ function App() {
     })
     .catch(err => console.log(err));
   }, [])
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  function tokenCheck() {
+    const jwt = localStorage.getItem('jwt');
+    if(jwt){
+      auth.getContent(jwt).then((res) => {
+        if(res){
+          const userData = {
+            email: res.email
+          }
+          setLoggedIn(true);
+          setUserData(userData)
+          navigate('/', {replace: true})
+        }
+      })
+    }
+  }
+
+  function handleLogin(e) {
+    e.target.preventDefault();
+    setLoggedIn(true);
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -125,11 +154,11 @@ function App() {
   }
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header userData={isUserData} />
       <Routes>
-        <Route path='/sing-in' element={<Login />} />
-        <Route path='/sing-up' elenemt={<Register />} />
-        <Route path='/main' element={
+        <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
+        <Route path='/sign-up' element={<Register />} />
+        <Route exact path='/' element={
           <ProtectedRoute
           element={
           <Main
@@ -142,7 +171,7 @@ function App() {
             cards={cards}
           />}
           isLoggedIn={isLoggedIn}/>} />
-        <Route path='/' element={isLoggedIn ? <Navigate to='/main' /> : <Navigate to='/sing-in' /> } />
+        <Route path='/' element={isLoggedIn ? <Navigate to='/' /> : <Navigate to='/sign-in' /> } />
       </Routes>
 
       <Footer />
