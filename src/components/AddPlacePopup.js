@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
+
 
 function AddPlacePopup(props) {
 
-  const cardNameRef = React.useRef('');
-  const cardLinkRef = React.useRef('');
+  const [cardName, setCardName] = useState('');
+  const [cardLink, setCardLink] = useState('');
 
   React.useEffect(() => {
-    cardNameRef.current.value='';
-    cardLinkRef.current.value='';
-  }, [props.isOpen]);
+    setCardName('');
+    setCardLink('');
+  }, [props.isOpen])
+
+  function handleCardNameChange(e) {
+    setCardName(e.target.value);
+  }
+
+  function handleCardLinkName(e) {
+    setCardLink(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onAddPlace({
-      name: cardNameRef.current.value,
-      link: cardLinkRef.current.value,
+      name: cardName,
+      link: cardLink
     });
   }
 
@@ -29,9 +38,9 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
     >
       <input type="text" className="popup__input-item" minLength="2" maxLength="30" name="name" id="title-card"
-            placeholder="Название" ref={cardNameRef} required />
+            placeholder="Название" value={cardName} onChange={handleCardNameChange} required />
       <span className="popup__input-error title-card-error"></span>
-      <input type="url" className="popup__input-item" name="link" id="card-image" placeholder="Ссылка на изображение" ref={cardLinkRef}
+      <input type="url" className="popup__input-item" name="link" id="card-image" placeholder="Ссылка на изображение" value={cardLink} onChange={handleCardLinkName}
           required />
       <span className="popup__input-error card-image-error"></span>
   </PopupWithForm>
