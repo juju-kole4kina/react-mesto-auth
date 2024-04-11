@@ -8,6 +8,12 @@
 
 ---
 
+### Структура проекта
+[Ссылка на backend](https://github.com/juju-kole4kina/express-mesto-gha.git)
+[Ссылка на frontend](https://github.com/juju-kole4kina/react-mesto-auth)
+
+---
+
 ### Технологии:
 
 - Figma
